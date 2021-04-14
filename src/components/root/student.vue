@@ -104,6 +104,17 @@ export default {
 
             cb(new Error('请输入合法的手机号'));
         }
+        var checkAge = (rule, value, cb) => {
+            if(isNaN(parseInt(value))){
+                return cb(new Error('请输入数字'));
+            }else {
+                if(parseInt(value) > rule.max_age || parseInt(value) < rule.min_age){
+                    return cb(new Error('年龄范围在10到100岁之间'));
+                }else{
+                    return cb();
+                }
+            }
+        }
         return {
             // 获取用户列表的参数对象
             queryInfo: {
@@ -130,7 +141,7 @@ export default {
                 ],
                 age: [
                     { required: true, message: '请输入年龄', trigger: 'blur'},
-                    { min: 2, max: 2, message: '年龄在10~100之间', trigger: 'blur'}
+                    { max_age: 100, min_age: 10, validator: checkAge, trigger: 'blur'}
                 ],
                 sex: [
                     { required: true, message: '请选择性别', trigger: 'blur'}
@@ -240,6 +251,7 @@ export default {
             this.queryPlaceName(res.data.region);
             // console.log(this.getplacename);
             this.editForm = res.data;
+            console.log(this.editForm);
             this.editDialogVisible = true;
         },
         // 监听更新学生信息对话框的关闭事件

@@ -11,7 +11,7 @@
         <!-- 页面主体区 -->
         <el-container>
             <!-- 侧边栏 -->
-            <el-aside :width="isCollapse ? '64px' : '200px'">
+            <el-aside v-if="this.screenWidth > 475" :width="isCollapse ? '64px' : '200px'">
                 <div class="toggle-button" @click="toggleCollapse">|||</div>
                 <!-- 侧边栏菜单区域 -->
                 <el-menu background-color="#333744" text-color="#fff" active-text-color="#409eff"  :unique-opened="true" :collapse="isCollapse" :collapse-transition="false" :router="true" :default-active="activePath">
@@ -95,11 +95,13 @@ export default {
             // 被激活的链接地址
             activePath: '',
             // 学生信息
-            studentInfo: {}
+            studentInfo: {},
+            screenWidth: 0
         }
     },
     created() {
         this.activePath = window.sessionStorage.getItem('activePath');
+        this.getScreenWidth();
     },
     methods: {
         logout() {
