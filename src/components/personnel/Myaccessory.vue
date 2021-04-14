@@ -65,6 +65,17 @@
 <script>
 export default {
     data () {
+        var checkNumber = (rule, value, cb) => {
+            if(isNaN(parseInt(value))){
+                return cb(new Error('请输入数字'));
+            }else {
+                if(parseInt(value) < rule.min_number){
+                    return cb(new Error('请输入合理的数量'));
+                }else{
+                    return cb();
+                }
+            }
+        }
         return {
             PerInfo: {},
             // 获取用户列表的参数对象
@@ -90,7 +101,15 @@ export default {
                 personnelname: '',
                 personnelphone: null
             },
-            addFormRules: {},
+            addFormRules: {
+                name: [
+                    { required: true, message: '请输入配件名称', trigger: 'blur'}
+                ],
+                number: [
+                    { required: true, message: '请输入配件名称', trigger: 'blur'},
+                    { min_number: 0, validator: checkNumber, trigger: 'blur'}
+                ]
+            },
         }
     },
     created(){

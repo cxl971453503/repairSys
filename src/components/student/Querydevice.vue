@@ -20,7 +20,7 @@
             <el-table :data="deviceList" border stripe>
                 <el-table-column type="index"></el-table-column>
                 <el-table-column label="设备名" prop="name"></el-table-column>
-                <el-table-column label="设备型号" prop="type"></el-table-column>
+                <el-table-column label="设备类型" prop="type"></el-table-column>
             </el-table>
 
             <!-- 分页区域 -->
